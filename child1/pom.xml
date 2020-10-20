@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>demo</artifactId>
+        <groupId>org.example</groupId>
+        <version>2.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>child1</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <module.basedir>${project.parent.basedir}</module.basedir>
+        <module.name>demo</module.name>
+        <spring.version>5.1.18.RELEASE</spring.version>
+    </properties>
+
+
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>genernate-module-child1</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <!--拷贝jar档-->
+                                <copy todir="${module.basedir}/target/${module.name}">
+                                    <fileset dir="${basedir}/target">
+                                        <include name="*.jar"/>
+                                    </fileset>
+                                </copy>
+                                <!--拷贝conf-->
+                                <copy todir="${module.basedir}/target/${module.name}">
+                                    <fileset dir="${basedir}/src/main/resources">
+                                        <include name="**/*.*"/>
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
